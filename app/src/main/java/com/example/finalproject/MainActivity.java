@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Question[] mQuestionBank = new Question[]{ //Questions Created
             new Question("What is your name?"),
             new Question("What is your date of birth? (MM/DD/YY)"),
+            new Question("Are you vaccinated?")
     };
 
     // [Question], [Attribute]
@@ -54,16 +56,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void nextQuestion(){
         if (index == 0){
             person.setName(eText.getText().toString());
+            Toast.makeText(this, "Name Saved as " + person.getName(), Toast.LENGTH_LONG).show();
         }
         else if (index == 1){
             person.setmDateOfBirth(eText.getText().toString());
+            Toast.makeText(this, "DOB Saved as " + person.getDateOfBirth(), Toast.LENGTH_LONG).show();
         }
-        index++;
-        eText.setText("");
-        eText.setHint(mQuestionBank[index].getName());
+        else if (index == 2){
+            if (eText.getText().toString().toLowerCase().equals("yes")){
+                person.setVaccinated(true);
+            }
+            else if (eText.getText().toString().toLowerCase().equals("no")){
+                person.setVaccinated(false);
+            }
+
+        }
+        if (index < mQuestionBank.length - 1){
+            index++;
+            eText.setText("");
+            eText.setHint(mQuestionBank[index].getName());
+        }
+        else{
+            nextButton.setEnabled(false);
+            nextButton.setVisibility(View.GONE);
+            previousButton.setEnabled(false);
+            previousButton.setVisibility(View.GONE);
+            eText.setEnabled(false);
+            eText.setVisibility(View.GONE);
+        }
     }
 
     public void prevQuestion(){
+        Toast.makeText(this, "Info Saved", Toast.LENGTH_LONG).show();
         index--;
         eText.setText("");
         eText.setHint(mQuestionBank[index].getName());

@@ -14,6 +14,7 @@ public class Person {
     //private Time mTime;
     private Location location;
     private boolean mSafe;
+    private boolean mDoubleSafe;
     private boolean mVaccinated;
     private boolean mMasked;
 
@@ -23,6 +24,7 @@ public class Person {
         mVaccinated = false;
         mMasked = false;
         mSafe = (mVaccinated || mMasked);
+        mDoubleSafe = (mVaccinated && mMasked);
     }
 
     public void setLocation(Location l){
@@ -34,21 +36,27 @@ public class Person {
     }
 
     public void setmDateOfBirth(String n){
+        //mDateOfBirth = new Date();
         // 10/25/30
         int year;
-        if (Integer.parseInt(n.substring(7,5)) <= 21){
-            year = 2000 + Integer.parseInt(n.substring(7,9));
+        if (Integer.parseInt(n.substring(6,8)) <= 21){
+            year = 2000 + Integer.parseInt(n.substring(6,8)) - 1900;
         }
         else{
-            year = 1900 + Integer.parseInt(n.substring(7,9));
+            year = 1900 + Integer.parseInt(n.substring(7,9)) - 1900;
         }
         int month = Integer.parseInt(n.substring(0,2));
         int date = Integer.parseInt(n.substring(3, 5));
-        this.mDateOfBirth = new Date(year, month, date);
+        this.mDateOfBirth = new Date(year, (month - 1) % 12, date);
     }
 
     public boolean getSafe(){
         return mSafe;
+    }
+
+    public void update(){
+        mSafe = (mVaccinated || mMasked);
+        mDoubleSafe = (mVaccinated && mMasked);
     }
 
     public boolean getMasked(){
@@ -69,5 +77,13 @@ public class Person {
 
     public void setVaccinated(boolean solved) {
         mVaccinated = solved;
+    }
+
+    public String getDateOfBirth() {
+        return mDateOfBirth.toString();
+    }
+
+    public String getName() {
+        return mName;
     }
 }

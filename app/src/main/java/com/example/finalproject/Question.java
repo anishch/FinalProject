@@ -16,7 +16,7 @@ public class Question {
         return this.str;
     }
 
-    public void setname(String str){
+    public void setName(String str){
         this.str = str;
     }
 

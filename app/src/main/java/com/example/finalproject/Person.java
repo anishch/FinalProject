@@ -61,10 +61,19 @@ public class Person {
     }
 
     public boolean inLine(Event event){
-        if (this.mGenericSafe == false){
+        /*if (this.mGenericSafe == false){
+            return false;
+        }*/
+        if (event.getMaskBox() != getMasked()){
+            return false;
+        }
+        if (event.getVaxBox() != getVaccinated()){
             return false;
         }
         else{
+            return true;
+        }
+        /*else{
             if (event.getMaskBox() != getMasked()){
                 return false;
             }
@@ -74,7 +83,7 @@ public class Person {
             else{
                 return true;
             }
-        }
+        }*/
     }
 
     public void update(){

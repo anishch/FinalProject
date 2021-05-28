@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class EventFragment extends Fragment {
 
     private static final int REQUEST_DATE_AND_TIME = 0;
 
-    private boolean bool = false;
+    private boolean bool = true;
 
     private Date date;
 
@@ -107,6 +108,7 @@ public class EventFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 mEvent.setVaxBox(isChecked);
+
             }
         });
 
@@ -158,7 +160,7 @@ public class EventFragment extends Fragment {
             public void afterTextChanged(Editable s)
             {
                 if (Integer.parseInt(s.toString()) > 99){
-                    bool = true;
+                    bool = false;
                 }
             }
         });
@@ -176,7 +178,7 @@ public class EventFragment extends Fragment {
                     CharSequence s, int start, int
                     before, int count) {
                 if (soonQuestion.getText().toString().toLowerCase().equals("yes")){
-                    bool = true;
+                    bool = false;
                     MainActivity.person.setGenericSafe(false);
                 }
                 else{
@@ -203,7 +205,7 @@ public class EventFragment extends Fragment {
                     CharSequence s, int start, int
                     before, int count) {
                 if (symptomQuestion.getText().toString().toLowerCase().equals("yes")){
-                    bool = true;
+                    bool = false;
                     MainActivity.person.setGenericSafe(false);
                 }
                 else{
@@ -230,7 +232,7 @@ public class EventFragment extends Fragment {
                     CharSequence s, int start, int
                     before, int count) {
                 if (maskQuestion.getText().toString().toLowerCase().equals("no")){
-                    bool = true;
+                    bool = false;
                     MainActivity.person.setMasked(false);
                     MainActivity.person.update();
                     MainActivity.person.setGenericSafe(false);
@@ -254,6 +256,21 @@ public class EventFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
+                Log.d("ALPHA", MainActivity.person.getName());
+                Log.d("ALPHA", MainActivity.person.getDateOfBirth());
+                //Log.d("ALPHA", MainActivity.person.)
+                if (MainActivity.person.getMasked() == true){
+                    Log.d("ALPHA", "YES");
+                }
+                if (mEvent.getVaxBox() == true){
+                    Log.d("ALPHA", "LET'S GOO");
+                }
+                if (mEvent.getMaskBox() == true){
+                    Log.d("ALPHA", "LET'S GOO");
+                }
+                if (MainActivity.person.getName().toLowerCase().equals("anish")){
+                    Log.d("BETA", "YES");
+                }
                 if (MainActivity.person.inLine(mEvent) == true){
                     mEvent.setCompleted(isChecked);
                 }

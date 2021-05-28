@@ -161,6 +161,10 @@ public class EventFragment extends Fragment {
             {
                 if (Integer.parseInt(s.toString()) > 99){
                     bool = false;
+                    MainActivity.person.setGenericSafe(false);
+                }
+                else{
+                    MainActivity.person.setGenericSafe(bool);
                 }
             }
         });
@@ -250,35 +254,43 @@ public class EventFragment extends Fragment {
             }
         });
 
+        /*if (MainActivity.person.inLine(mEvent)){
+            mSolvedCheckBox.setEnabled(false);
+        }*/
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.event_solved);
         mSolvedCheckBox.setChecked(mEvent.isCompleted());
-        mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                Log.d("ALPHA", MainActivity.person.getName());
-                Log.d("ALPHA", MainActivity.person.getDateOfBirth());
-                //Log.d("ALPHA", MainActivity.person.)
-                if (MainActivity.person.getMasked() == true){
-                    Log.d("ALPHA", "YES");
-                }
-                if (mEvent.getVaxBox() == true){
-                    Log.d("ALPHA", "LET'S GOO");
-                }
-                if (mEvent.getMaskBox() == true){
-                    Log.d("ALPHA", "LET'S GOO");
-                }
-                if (MainActivity.person.getName().toLowerCase().equals("anish")){
-                    Log.d("BETA", "YES");
-                }
-                if (MainActivity.person.inLine(mEvent) == true){
-                    mEvent.setCompleted(isChecked);
-                }
-                else{
+        mSolvedCheckBox.setEnabled(false);
+        if (MainActivity.person.inLine(mEvent)){
+            mSolvedCheckBox.setEnabled(true);
+            mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView,
+                                             boolean isChecked) {
+                    Log.d("ALPHA", MainActivity.person.getName());
+                    Log.d("ALPHA", MainActivity.person.getDateOfBirth());
+                    //Log.d("ALPHA", MainActivity.person.)
+                    if (MainActivity.person.getMasked() == true){
+                        Log.d("ALPHA", "YES");
+                    }
+                    if (mEvent.getVaxBox() == true){
+                        Log.d("ALPHA", "LET'S GOO");
+                    }
+                    if (mEvent.getMaskBox() == true){
+                        Log.d("ALPHA", "LET'S GOO");
+                    }
+                    if (MainActivity.person.getName().toLowerCase().equals("anish")){
+                        Log.d("BETA", "YES");
+                    }
+                    if (MainActivity.person.inLine(mEvent) == true){
+                        mEvent.setCompleted(isChecked);
+                    }
+                    else{
 
+                    }
                 }
-            }
-        });
+            });
+        }
+
         FragmentManager fm = getFragmentManager();
         Fragment fragment =
                 fm.findFragmentById(R.id.fragment_container);

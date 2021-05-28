@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextButton.setOnClickListener(this);
         previousButton.setOnClickListener(this);
         eText.setHint(mQuestionBank[index].getName());
+
     }
 
     @Override
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             previousButton.setVisibility(View.GONE);
             eText.setEnabled(false);
             eText.setVisibility(View.GONE);
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
         }
     }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Final Project</string>
+    <string name="subtitle_format">%1$d events</string>
 </resources>

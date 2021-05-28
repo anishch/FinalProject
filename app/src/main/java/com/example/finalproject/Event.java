@@ -14,12 +14,13 @@ public class Event {
     private Time mTime;
     private boolean mCompleted;
     private Location mLocation;
+    private String temperature;
 
     public Event() {
         mId = UUID.randomUUID();
         mDate = new Date();
         mTime = new Time(mDate.getTime());
-
+        this.mTitle = "Event";
     }
 
     public void setTime(int hours, int mins, int seconds){
@@ -41,7 +42,15 @@ public class Event {
         this.mTime.setTime(time);
         this.mDate.setTime(time);
     }
-    
+
+    public void setTemperature(String str){
+        this.temperature = str;
+    }
+
+    public String getTemperature(){
+        return this.temperature;
+    }
+
     public UUID getId() {
         return mId;
     }

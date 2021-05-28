@@ -1,0 +1,42 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="EVENT NAME"
+        android:id="@+id/event_title_title"/>
+
+    <EditText
+        android:id="@+id/event_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fill out the name of this event"/>
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TEMPERATURE"
+        android:id="@+id/event_temp_title"/>
+
+    <EditText
+        android:id="@+id/event_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fill out your current temperature"/>
+    <Button
+        android:id="@+id/event_date_and_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <CheckBox
+        android:id="@+id/event_solved"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Completed Filling Out Your Form?"/>
+</LinearLayout>

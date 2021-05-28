@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -31,11 +32,13 @@ import java.util.UUID;
 
 import static android.widget.CompoundButton.*;
 
+
 public class EventFragment extends Fragment {
 
     private static final String ARG_Event_ID = "Event_id";
     private static final String DIALOG_DATE_AND_TIME ="DialogDateandTime";
     //private static final String DIALOG_TIME = "DialogTime";
+
 
     private static final int REQUEST_DATE_AND_TIME = 0;
 
@@ -141,6 +144,9 @@ public class EventFragment extends Fragment {
             }
         });
 
+        /*
+        if (mEvent.getDate() == java.time.LocalDate.now().get)
+         */
         tempQuestion = (EditText) v.findViewById(R.id.question_temperature);
         tempQuestion.setText(mEvent.getTemperature());
         tempQuestion.addTextChangedListener(new TextWatcher() {

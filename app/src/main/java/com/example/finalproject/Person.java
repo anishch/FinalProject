@@ -17,6 +17,7 @@ public class Person {
     private boolean mDoubleSafe;
     private boolean mVaccinated;
     private boolean mMasked;
+    private boolean mGenericSafe;
 
 
     public Person() {
@@ -25,6 +26,7 @@ public class Person {
         mMasked = false;
         mSafe = (mVaccinated || mMasked);
         mDoubleSafe = (mVaccinated && mMasked);
+        mGenericSafe = false;
     }
 
     public void setLocation(Location l){
@@ -52,6 +54,27 @@ public class Person {
 
     public boolean getSafe(){
         return mSafe;
+    }
+
+    public void setGenericSafe(boolean bool){
+        this.mGenericSafe = bool;
+    }
+
+    public boolean inLine(Event event){
+        if (this.mGenericSafe == false){
+            return false;
+        }
+        else{
+            if (event.getMaskBox() != getMasked()){
+                return false;
+            }
+            if (event.getVaxBox() != getVaccinated()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
     }
 
     public void update(){

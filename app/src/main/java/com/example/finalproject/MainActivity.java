@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button previousButton;
     EditText eText;
     int index = 0;
-    Person person;
+    static Person person;
 
     private Question[] mQuestionBank = new Question[]{ //Questions Created
             new Question("What is your name?"),
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextButton.setOnClickListener(this);
         previousButton.setOnClickListener(this);
         eText.setHint(mQuestionBank[index].getName());
-
     }
 
     @Override

@@ -15,12 +15,30 @@ public class Event {
     private boolean mCompleted;
     private Location mLocation;
     private String temperature;
+    private boolean needsVaccination;
+    private boolean needsMask;
 
     public Event() {
         mId = UUID.randomUUID();
         mDate = new Date();
         mTime = new Time(mDate.getTime());
         this.mTitle = "Event";
+    }
+
+    public void setVaxBox(boolean bool){
+        this.needsVaccination = bool;
+    }
+
+    public void setMaskBox(boolean bool){
+        this.needsMask = bool;
+    }
+
+    public boolean getMaskBox(){
+        return this.needsMask;
+    }
+
+    public boolean getVaxBox(){
+        return this.needsVaccination;
     }
 
     public void setTime(int hours, int mins, int seconds){

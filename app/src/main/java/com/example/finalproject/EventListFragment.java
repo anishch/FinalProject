@@ -56,8 +56,8 @@ public class EventListFragment extends Fragment {
                 .findViewById(R.id.event_recycler_view);
         mEventRecyclerView.setLayoutManager(new
                 LinearLayoutManager(getActivity()));
-        View thingy = view.findViewById(R.id.blank);
-        Button button = thingy.findViewById(R.id.toast_generator);
+        //View thingy = view.findViewById(R.id.blank);
+        /*Button button = thingy.findViewById(R.id.toast_generator);
         if (EventLab.get(getActivity()).getEvents().size() != 0){
             button.setVisibility(View.GONE);
         }
@@ -71,7 +71,7 @@ public class EventListFragment extends Fragment {
             else{
 
             }
-        });
+        });*/
         updateUI();
         return view;
 
@@ -165,13 +165,14 @@ public class EventListFragment extends Fragment {
             mEvent = event;
             mTitleTextView.setText(event.getTitle());
             mDateTextView.setText(DateFormat.format("EEEE, MMM dd, yyyy, hh:mm", event.getDate()));
-            mSolvedImageView.setVisibility(event.isCompleted() ? View.VISIBLE : View.GONE);
+            mSolvedImageView.setVisibility(MainActivity.person.inLine(mEvent) ? View.VISIBLE : View.GONE);
         }
 
         @Override
         public void onClick(View view){
             //Toast.makeText(getActivity(), mEvent.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
             Intent intent = EventActivity.newIntent(getActivity(), mEvent.getId());
+            //Intent intent = HealthCheckActivity.newIntent(getActivity(), mEvent.getId());
             /*Intent intent =
                     EventPagerActivity.newIntent(getActivity(),
                             mEvent.getId());*/

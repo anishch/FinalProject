@@ -47,8 +47,15 @@ public class EventFragment extends Fragment {
     private Event mEvent;
     private Button mDateButton;
     private Button mTimeButton;
-    private CheckBox mSolvedCheckBox;
+    private CheckBox mVaxBox;
+    private CheckBox mMaskBox;
     private EditText mCOVIDViolator;
+
+    private EditText tempQuestion;
+    private EditText soonQuestion;
+    private EditText symptomQuestion;
+    private EditText maskQuestion;
+    private CheckBox mSolvedCheckBox;
 
     public static EventFragment newInstance(UUID EventId){
         Bundle args = new Bundle();
@@ -93,27 +100,26 @@ public class EventFragment extends Fragment {
             }
         });
 
-        mTitleField = (EditText) v.findViewById(R.id.event_temperature);
-        mTitleField.setText(mEvent.getTemperature());
-        mTitleField.addTextChangedListener(new TextWatcher() {
+        mVaxBox = (CheckBox) v.findViewById(R.id.vax_needed);
+        mVaxBox.setChecked(mEvent.getVaxBox());
+        mVaxBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int count,
-                    int after) {
-
-            }
-            @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int
-                    before, int count) {
-                mEvent.setTemperature(s.toString());
-            }
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                mEvent.setVaxBox(isChecked);
             }
         });
+
+        mMaskBox = (CheckBox) v.findViewById(R.id.mask_needed);
+        mMaskBox.setChecked(mEvent.getMaskBox());
+        mMaskBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                mEvent.setMaskBox(isChecked);
+            }
+        });
+
         mDateButton = (Button)
                 v.findViewById(R.id.event_date_and_time);
         mDateButton.setText(mEvent.getDate().toString());
@@ -130,34 +136,130 @@ public class EventFragment extends Fragment {
                     e.printStackTrace();
                 }
                 dialog.show(manager, DIALOG_DATE_AND_TIME);
-                //dialog.setTarget
-                //dialog.show(manager, DIALOG_TIME);
-                //bool = true;
-
-                //bool = false;
-                /*if (!bool){
-                    FragmentManager manager = getFragmentManager();
-                    DatePickerFragment dialog = DatePickerFragment.newInstance(mEvent.getDate());
-                    dialog.setTargetFragment(EventFragment.this, REQUEST_DATE);
-                    dialog.show(manager, DIALOG_DATE);
-                    bool = true;
-                }
-                else if (bool){
-                    FragmentManager manager2 = getFragmentManager();
-                    TimePickerFragment dialog2 = TimePickerFragment.newInstance(mEvent.getTime());
-                    dialog2.setTargetFragment(EventFragment.this, REQUEST_TIME);
-                    dialog2.show(manager2, DIALOG_TIME);
-                    bool = false;
-                }*/
             }
         });
+
+        tempQuestion = (EditText) v.findViewById(R.id.question_temperature);
+        tempQuestion.setText(mEvent.getTemperature());
+        tempQuestion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count,
+                    int after) {
+
+            }
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int
+                    before, int count) {
+                mEvent.setTemperature(s.toString());
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                if (Integer.parseInt(s.toString()) > 99){
+                    bool = true;
+                }
+            }
+        });
+
+        soonQuestion = (EditText) v.findViewById(R.id.question_proximity);
+        soonQuestion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count,
+                    int after) {
+
+            }
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int
+                    before, int count) {
+                if (soonQuestion.getText().toString().toLowerCase().equals("yes")){
+                    bool = true;
+                    MainActivity.person.setGenericSafe(false);
+                }
+                else{
+                    MainActivity.person.setGenericSafe(bool);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+
+            }
+        });
+
+        symptomQuestion = (EditText) v.findViewById(R.id.question_symptoms);
+        symptomQuestion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count,
+                    int after) {
+
+            }
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int
+                    before, int count) {
+                if (symptomQuestion.getText().toString().toLowerCase().equals("yes")){
+                    bool = true;
+                    MainActivity.person.setGenericSafe(false);
+                }
+                else{
+                    MainActivity.person.setGenericSafe(bool);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+
+            }
+        });
+
+        maskQuestion = (EditText) v.findViewById(R.id.question_mask);
+        maskQuestion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count,
+                    int after) {
+
+            }
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int
+                    before, int count) {
+                if (maskQuestion.getText().toString().toLowerCase().equals("no")){
+                    bool = true;
+                    MainActivity.person.setMasked(false);
+                    MainActivity.person.update();
+                    MainActivity.person.setGenericSafe(false);
+                }
+                else if (maskQuestion.getText().toString().toLowerCase().equals("yes")){
+                    MainActivity.person.setMasked(true);
+                    MainActivity.person.update();
+                    MainActivity.person.setGenericSafe(bool);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+
+            }
+        });
+
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.event_solved);
         mSolvedCheckBox.setChecked(mEvent.isCompleted());
         mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                mEvent.setCompleted(isChecked);
+                if (MainActivity.person.inLine(mEvent) == true){
+                    mEvent.setCompleted(isChecked);
+                }
+                else{
+
+                }
             }
         });
         FragmentManager fm = getFragmentManager();

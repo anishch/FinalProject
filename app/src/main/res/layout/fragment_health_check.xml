@@ -4,35 +4,6 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:orientation="vertical">
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="EVENT NAME"
-        android:id="@+id/event_title_title"/>
-
-    <EditText
-        android:id="@+id/event_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fill out the name of this event"/>
-
-    <CheckBox
-        android:id="@+id/vax_needed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vaccination Needed?"/>
-
-    <CheckBox
-        android:id="@+id/mask_needed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mask Needed?"/>
-
-    <Button
-        android:id="@+id/event_date_and_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/question_temperature"
@@ -63,6 +34,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Completed Filling Out Your Form?"/>
-
 
 </LinearLayout>

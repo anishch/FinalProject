@@ -148,6 +148,7 @@ public class EventListFragment extends Fragment {
         private TextView mDateTextView;
         //private TextView mTimeTextView;
         private ImageView mSolvedImageView;
+        private ImageView mStopImageView;
 
         private Event mEvent;
 
@@ -159,6 +160,7 @@ public class EventListFragment extends Fragment {
             mDateTextView =  itemView.findViewById(R.id.event_date);
             //mTimeTextView = (TextView) itemView.findViewById(R.id.Event_time);
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.imageView);
+            mStopImageView = itemView.findViewById(R.id.imageView2);
         }
 
         public void bind(Event event){
@@ -166,6 +168,8 @@ public class EventListFragment extends Fragment {
             mTitleTextView.setText(event.getTitle());
             mDateTextView.setText(DateFormat.format("EEEE, MMM dd, yyyy, hh:mm", event.getDate()));
             mSolvedImageView.setVisibility(mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+            mStopImageView.setVisibility(!mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+            //mStopImageView.setVisiblity(MainActivity.person.inLine(mEvent) ? View.VISIBLE : View.GONE);
         }
 
         @Override

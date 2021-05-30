@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.location.Location;
+import android.util.Log;
 
 import java.sql.Time;
 import java.util.Date;
@@ -61,10 +62,39 @@ public class Person {
     }
 
     public boolean inLine(Event event){
-        /*if (this.mGenericSafe == false){
+        if (this.mGenericSafe == false){
             return false;
-        }*/
-        if (event.getMaskBox() != getMasked()){
+        }
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        int l = 0;
+        if (getMasked() == true){
+            i++;
+        }
+        if (event.getMaskBox() == true){
+            j++;
+        }
+        if (getVaccinated() == true){
+            k++;
+        }
+        if (event.getVaxBox() == true){
+            l++;
+        }
+        if (i >= j && k >= l){
+            return true;
+        }
+        else{
+            return false;
+        }
+        /*else{
+            j++;
+        }
+        if ()*/
+        /*if (event.getMaskBox() != getMasked()){
+            if (event.getMaskBox() == true){
+                Log.d("WE GOT A MAJOR ISSUE", "THIS ONE");
+            }
             return false;
         }
         if (event.getVaxBox() != getVaccinated()){
@@ -72,7 +102,7 @@ public class Person {
         }
         else{
             return true;
-        }
+        }*/
         /*else{
             if (event.getMaskBox() != getMasked()){
                 return false;

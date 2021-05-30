@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -61,6 +62,9 @@ public class EventFragment extends Fragment {
     private EditText maskQuestion;
     private CheckBox mSolvedCheckBox;
 
+    private boolean bool2 = false;
+    private String str;
+
     public static EventFragment newInstance(UUID EventId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_Event_ID, EventId);
@@ -96,6 +100,34 @@ public class EventFragment extends Fragment {
                     CharSequence s, int start, int
                     before, int count) {
                 mEvent.setTitle(s.toString());
+                if (s.toString().equals("The Overlake School")){
+                    bool2 = true;
+                    str = s.toString();
+                }
+                if (s.toString().equals("CenturyLink Stadium")){
+                    bool2 = true;
+                    str = s.toString();
+                }
+                else if (s.toString().equals("T-Mobile Park")){
+                    bool2 = true;
+                    str = s.toString();
+                }
+                else if (s.toString().equals("Fred Meyer")){
+                    bool2 = true;
+                    str = s.toString();
+
+                }
+                else if (s.toString().equals("UW")){
+                    bool2 = true;
+                    str = s.toString();
+                }
+                else if (s.toString().equals("Starbucks")){
+                    bool2 = true;
+                    str = s.toString();
+                }
+                else{
+
+                }
             }
             @Override
             public void afterTextChanged(Editable s)
@@ -105,25 +137,85 @@ public class EventFragment extends Fragment {
         });
 
         mVaxBox = (CheckBox) v.findViewById(R.id.vax_needed);
-        mVaxBox.setChecked(mEvent.getVaxBox());
-        mVaxBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                mEvent.setVaxBox(isChecked);
-
+        if (bool2){
+            if (str.toString().equals("The Overlake School")){
+                mEvent.setVaxBox(false);
+                mVaxBox.setChecked(mEvent.getVaxBox());
             }
-        });
+            if (str.toString().equals("CenturyLink Stadium")){
+                mEvent.setVaxBox(true);
+                mVaxBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("T-Mobile Park")){
+                mEvent.setVaxBox(true);
+                mVaxBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("Fred Meyer")){
+                mEvent.setVaxBox(false);
+                mVaxBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("UW")){
+                mEvent.setVaxBox(true);
+                mVaxBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("Starbucks")){
+                mEvent.setVaxBox(false);
+                mVaxBox.setChecked(mEvent.getVaxBox());
+            }
+            mVaxBox.setEnabled(false);
+        }
+        else{
+            mVaxBox.setChecked(mEvent.getVaxBox());
+            mVaxBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView,
+                                             boolean isChecked) {
+                    mEvent.setVaxBox(isChecked);
+
+                }
+            });
+        }
+
 
         mMaskBox = (CheckBox) v.findViewById(R.id.mask_needed);
-        mMaskBox.setChecked(mEvent.getMaskBox());
-        mMaskBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                mEvent.setMaskBox(isChecked);
+        if (bool2){
+            if (str.toString().equals("The Overlake School")){
+                Log.d("BOOL ACTIVATED", "RECOGNIZED");
+                mEvent.setMaskBox(true);
+                mMaskBox.setChecked(mEvent.getVaxBox());
             }
-        });
+            if (str.toString().equals("CenturyLink Stadium")){
+                mEvent.setMaskBox(false);
+                mMaskBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("T-Mobile Park")){
+                mEvent.setMaskBox(false);
+                mMaskBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("Fred Meyer")){
+                mEvent.setMaskBox(true);
+                mMaskBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("UW")){
+                mEvent.setMaskBox(true);
+                mMaskBox.setChecked(mEvent.getVaxBox());
+            }
+            else if (str.toString().equals("Starbucks")){
+                mEvent.setMaskBox(true);
+                mMaskBox.setChecked(mEvent.getVaxBox());
+            }
+            mMaskBox.setEnabled(false);
+        }
+        else{
+            mMaskBox.setChecked(mEvent.getMaskBox());
+            mMaskBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView,
+                                             boolean isChecked) {
+                    mEvent.setMaskBox(isChecked);
+                }
+            });
+        }
 
         mDateButton = (Button)
                 v.findViewById(R.id.event_date_and_time);
@@ -245,12 +337,12 @@ public class EventFragment extends Fragment {
                     bool = false;
                     MainActivity.person.setMasked(false);
                     MainActivity.person.update();
-                    MainActivity.person.setGenericSafe(false);
+                    //MainActivity.person.setGenericSafe(false);
                 }
                 else if (maskQuestion.getText().toString().toLowerCase().equals("yes")){
                     MainActivity.person.setMasked(true);
                     MainActivity.person.update();
-                    MainActivity.person.setGenericSafe(bool);
+                    //MainActivity.person.setGenericSafe(bool);
                 }
             }
             @Override
@@ -295,6 +387,9 @@ public class EventFragment extends Fragment {
                     }
                 }
             });
+        }
+        else{
+            Log.d("ISSUE", "INLINE IS SCREWED UP");
         }
 
         FragmentManager fm = getFragmentManager();

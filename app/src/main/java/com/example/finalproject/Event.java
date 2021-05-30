@@ -23,6 +23,9 @@ public class Event {
         mDate = new Date();
         mTime = new Time(mDate.getTime());
         this.mTitle = "Event";
+        this.needsMask = false;
+        this.needsVaccination = false;
+        this.mCompleted = false;
     }
 
     public void setVaxBox(boolean bool){

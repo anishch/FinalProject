@@ -344,9 +344,6 @@ public class EventFragment extends Fragment {
                     MainActivity.person.update();
                     //MainActivity.person.setGenericSafe(bool);
                 }
-                else{
-                    MainActivity.person.setGenericSafe(false);
-                }
             }
             @Override
             public void afterTextChanged(Editable s)

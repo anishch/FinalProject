@@ -119,4 +119,59 @@ public class Event {
     public void setCompleted(boolean completed) {
         mCompleted = completed;
     }
+
+    public boolean inLine(Person person){
+        if (person.mGenericSafe == false){
+            return false;
+        }
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        int l = 0;
+        if (person.getMasked() == true){
+            i++;
+        }
+        if (this.getMaskBox() == true){
+            j++;
+        }
+        if (person.getVaccinated() == true){
+            k++;
+        }
+        if (this.getVaxBox() == true){
+            l++;
+        }
+        if (i >= j && k >= l){
+            return true;
+        }
+        else{
+            return false;
+        }
+        /*else{
+            j++;
+        }
+        if ()*/
+        /*if (event.getMaskBox() != getMasked()){
+            if (event.getMaskBox() == true){
+                Log.d("WE GOT A MAJOR ISSUE", "THIS ONE");
+            }
+            return false;
+        }
+        if (event.getVaxBox() != getVaccinated()){
+            return false;
+        }
+        else{
+            return true;
+        }*/
+        /*else{
+            if (event.getMaskBox() != getMasked()){
+                return false;
+            }
+            if (event.getVaxBox() != getVaccinated()){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }*/
+    }
 }

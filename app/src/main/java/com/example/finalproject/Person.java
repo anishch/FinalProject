@@ -18,7 +18,7 @@ public class Person {
     private boolean mDoubleSafe;
     private boolean mVaccinated;
     private boolean mMasked;
-    private boolean mGenericSafe;
+    public boolean mGenericSafe;
 
 
     public Person() {

@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import android.text.format.DateFormat;
@@ -172,10 +174,30 @@ public class EventListFragment extends Fragment {
                 mSolvedImageView.setVisibility(View.GONE);
                 mStopImageView.setVisibility(View.GONE);
                 mEvent.setCompleted(false);
+                if (mEvent.getTitle().equals(EventLab.getEvents().get(EventLab.getEvents().size() - 1).getTitle())){
+                    if (mEvent.accessed){
+                        Toast.makeText (getActivity(), R.string.event_found, Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText (getActivity(), R.string.event_not_found, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
             else{
                 mSolvedImageView.setVisibility(mEvent.isCompleted() ? View.VISIBLE : View.GONE);
                 mStopImageView.setVisibility(!mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+                if (mEvent.getTitle().equals(EventLab.getEvents().get(EventLab.getEvents().size() - 1).getTitle())){
+                    if (mEvent.accessed){
+                        Toast.makeText (getActivity(), R.string.event_found, Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText (getActivity(), R.string.event_not_found, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if (mEvent.getDate().getTime() <= System.currentTimeMillis() + (15*60*1000)){
+                    Toast.makeText (getActivity(), R.string.event_soon, Toast.LENGTH_SHORT).show();
+                }
             }
             /*if (EventLab.getEvents().get(0).getId() == mEvent.getId()){
                 mStopImageView.setVisibility(View.GONE);

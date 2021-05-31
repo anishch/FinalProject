@@ -18,6 +18,7 @@ public class Event {
     private String temperature;
     private boolean needsVaccination;
     private boolean needsMask;
+    public boolean accessed = false;
 
     public Event() {
         mId = UUID.randomUUID();
@@ -84,27 +85,33 @@ public class Event {
         if (this.getTitle().equals("The Overlake School")){
             this.setVaxBox(false);
             this.setMaskBox(true);
+            this.accessed = true;
         }
         else if (this.getTitle().equals("CenturyLink Stadium")){
             this.setVaxBox(true);
             this.setMaskBox(false);
+            this.accessed = true;
         }
         else if (this.getTitle().equals("T-Mobile Park")){
             this.setVaxBox(true);
             this.setMaskBox(false);
+            this.accessed = true;
             //this.get
         }
         else if (this.getTitle().equals("Fred Meyer")){
             this.setVaxBox(false);
             this.setMaskBox(true);
+            this.accessed = true;
         }
         else if (this.getTitle().equals("UW")){
             this.setVaxBox(true);
             this.setMaskBox(true);
+            this.accessed = true;
         }
         else if (this.getTitle().equals("Starbucks")){
             this.setVaxBox(false);
             this.setMaskBox(true);
+            this.accessed = true;
         }
     }
     public Date getDate() {

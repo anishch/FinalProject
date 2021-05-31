@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Final Project</string>
     <string name="subtitle_format">%1$d events</string>
+    <string name="event_found">We have found a registered event with the same event title. As such, we have implemented restrictions that the event provider has set. Please have this ready to show your event provider.</string>
+    <string name="event_not_found">We have not found a registered event with the same event title. As such, your description of the event is the only factor for a self-check. Please note that this does not have any basis nor can be used to enter events.</string>
+    <string name="event_soon">Just a reminder, you have an event soon! Make sure to have your check ready and saying \"Go\"!</string>
 </resources>

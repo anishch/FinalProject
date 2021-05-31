@@ -88,6 +88,7 @@ public class EventFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_event, container,
                 false);
         mCOVIDViolator = (EditText) v.findViewById(R.id.event_title);
+
         mCOVIDViolator.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(
@@ -100,28 +101,28 @@ public class EventFragment extends Fragment {
                     CharSequence s, int start, int
                     before, int count) {
                 mEvent.setTitle(s.toString());
-                if (s.toString().equals("The Overlake School")){
+                if (mEvent.getTitle().equals("The Overlake School")){
                     bool2 = true;
                     str = s.toString();
                 }
-                if (s.toString().equals("CenturyLink Stadium")){
+                if (mEvent.getTitle().equals("CenturyLink Stadium")){
                     bool2 = true;
                     str = s.toString();
                 }
-                else if (s.toString().equals("T-Mobile Park")){
+                else if (mEvent.getTitle().equals("T-Mobile Park")){
                     bool2 = true;
                     str = s.toString();
                 }
-                else if (s.toString().equals("Fred Meyer")){
+                else if (mEvent.getTitle().equals("Fred Meyer")){
                     bool2 = true;
                     str = s.toString();
 
                 }
-                else if (s.toString().equals("UW")){
+                else if (mEvent.getTitle().equals("UW")){
                     bool2 = true;
                     str = s.toString();
                 }
-                else if (s.toString().equals("Starbucks")){
+                else if (mEvent.getTitle().equals("Starbucks")){
                     bool2 = true;
                     str = s.toString();
                 }
@@ -137,34 +138,41 @@ public class EventFragment extends Fragment {
         });
 
         mVaxBox = (CheckBox) v.findViewById(R.id.vax_needed);
-        if (bool2){
-            if (str.toString().equals("The Overlake School")){
-                mEvent.setVaxBox(false);
-                mVaxBox.setChecked(mEvent.getVaxBox());
-            }
-            if (str.toString().equals("CenturyLink Stadium")){
-                mEvent.setVaxBox(true);
-                mVaxBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("T-Mobile Park")){
-                mEvent.setVaxBox(true);
-                mVaxBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("Fred Meyer")){
-                mEvent.setVaxBox(false);
-                mVaxBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("UW")){
-                mEvent.setVaxBox(true);
-                mVaxBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("Starbucks")){
-                mEvent.setVaxBox(false);
-                mVaxBox.setChecked(mEvent.getVaxBox());
-            }
+        mVaxBox.setChecked(mEvent.getVaxBox());
+        //mVaxBox.setEnabled(false);
+        if (mEvent.getTitle().equals("The Overlake School")){
+            mEvent.setVaxBox(false);
+            mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setEnabled(false);
         }
-        else{
+        else if (mEvent.getTitle().equals("CenturyLink Stadium")){
+            mEvent.setVaxBox(true);
+            mVaxBox.setChecked(mEvent.getVaxBox());
+            mVaxBox.setEnabled(false);
+        }
+        else if (mEvent.getTitle().equals("T-Mobile Park")){
+            mEvent.setVaxBox(true);
+            mVaxBox.setChecked(mEvent.getVaxBox());
+            mVaxBox.setEnabled(false);
+            //mEvent.get
+        }
+        else if (mEvent.getTitle().equals("Fred Meyer")){
+           mEvent.setVaxBox(false);
+           mVaxBox.setChecked(mEvent.getVaxBox());
+           mVaxBox.setEnabled(false);
+        }
+        else if (mEvent.getTitle().equals("UW")){
+            mEvent.setVaxBox(true);
+            mVaxBox.setChecked(mEvent.getVaxBox());
+            mVaxBox.setEnabled(false);
+        }
+        else if (mEvent.getTitle().equals("Starbucks")){
+            mEvent.setVaxBox(false);
+            mVaxBox.setChecked(mEvent.getVaxBox());
+            mVaxBox.setEnabled(false);
+        }
+        else if (!bool2){
+            Log.d("Hey", "Prob not working");
             mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
@@ -176,37 +184,40 @@ public class EventFragment extends Fragment {
             });
         }
 
-
         mMaskBox = (CheckBox) v.findViewById(R.id.mask_needed);
-        if (bool2){
-            if (str.toString().equals("The Overlake School")){
-                Log.d("BOOL ACTIVATED", "RECOGNIZED");
-                mEvent.setMaskBox(true);
-                mMaskBox.setChecked(mEvent.getVaxBox());
-            }
-            if (str.toString().equals("CenturyLink Stadium")){
-                mEvent.setMaskBox(false);
-                mMaskBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("T-Mobile Park")){
-                mEvent.setMaskBox(false);
-                mMaskBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("Fred Meyer")){
-                mEvent.setMaskBox(true);
-                mMaskBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("UW")){
-                mEvent.setMaskBox(true);
-                mMaskBox.setChecked(mEvent.getVaxBox());
-            }
-            else if (str.toString().equals("Starbucks")){
-                mEvent.setMaskBox(true);
-                mMaskBox.setChecked(mEvent.getVaxBox());
-            }
+        mMaskBox.setChecked(mEvent.getMaskBox());
+        //mMaskBox.setEnabled(false);
+        if (mEvent.getTitle().equals("The Overlake School")){
+            Log.d("BOOL ACTIVATED", "RECOGNIZED");
+            mEvent.setMaskBox(true);
+            mMaskBox.setChecked(mEvent.getMaskBox());
             mMaskBox.setEnabled(false);
         }
-        else{
+        else if (mEvent.getTitle().equals("CenturyLink Stadium")){
+            mEvent.setMaskBox(false);
+            mMaskBox.setChecked(mEvent.getMaskBox());
+            mMaskBox.setEnabled(false);
+        }
+        else if (mEvent.getTitle().equals("T-Mobile Park")){
+            mEvent.setMaskBox(false);
+            mMaskBox.setChecked(mEvent.getMaskBox());
+            mMaskBox.setEnabled(false);
+        }
+        else if (mEvent.getTitle().equals("Fred Meyer")){
+             mEvent.setMaskBox(true);
+             mMaskBox.setChecked(mEvent.getMaskBox());
+        }
+        else if (mEvent.getTitle().equals("UW")){
+            mEvent.setMaskBox(true);
+            mMaskBox.setChecked(mEvent.getMaskBox());
+            mMaskBox.setEnabled(false);
+        }
+        else if (mEvent.getTitle().equals("Starbucks")){
+             mEvent.setMaskBox(true);
+             mMaskBox.setChecked(mEvent.getMaskBox());
+             mMaskBox.setEnabled(false);
+        }
+        else if (!bool2){
             mMaskBox.setChecked(mEvent.getMaskBox());
             mMaskBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
@@ -356,11 +367,14 @@ public class EventFragment extends Fragment {
             mSolvedCheckBox.setEnabled(false);
         }*/
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.event_solved);
+        mEvent.setCompleted(false);
         mSolvedCheckBox.setChecked(mEvent.isCompleted());
         mSolvedCheckBox.setEnabled(false);
         if (MainActivity.person.inLine(mEvent)){
             mSolvedCheckBox.setEnabled(true);
-            mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            mEvent.setCompleted(true);
+            mSolvedCheckBox.setChecked(mEvent.isCompleted());
+            /*mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView,
                                              boolean isChecked) {
@@ -380,15 +394,18 @@ public class EventFragment extends Fragment {
                         Log.d("BETA", "YES");
                     }
                     if (MainActivity.person.inLine(mEvent) == true){
-                        mEvent.setCompleted(isChecked);
+                        mEvent.setCompleted(true);
                     }
                     else{
 
                     }
                 }
-            });
+            });*/
         }
         else{
+            mSolvedCheckBox.setEnabled(false);
+            mEvent.setCompleted(false);
+            mSolvedCheckBox.setChecked(mEvent.isCompleted());
             Log.d("ISSUE", "INLINE IS SCREWED UP");
         }
 

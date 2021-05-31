@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.location.Location;
+import android.util.Log;
 
 import java.sql.Time;
 import java.util.Date;
@@ -80,6 +81,31 @@ public class Event {
     }
     public void setTitle(String title) {
         mTitle = title;
+        if (this.getTitle().equals("The Overlake School")){
+            this.setVaxBox(false);
+            this.setMaskBox(true);
+        }
+        else if (this.getTitle().equals("CenturyLink Stadium")){
+            this.setVaxBox(true);
+            this.setMaskBox(false);
+        }
+        else if (this.getTitle().equals("T-Mobile Park")){
+            this.setVaxBox(true);
+            this.setMaskBox(false);
+            //this.get
+        }
+        else if (this.getTitle().equals("Fred Meyer")){
+            this.setVaxBox(false);
+            this.setMaskBox(true);
+        }
+        else if (this.getTitle().equals("UW")){
+            this.setVaxBox(true);
+            this.setMaskBox(true);
+        }
+        else if (this.getTitle().equals("Starbucks")){
+            this.setVaxBox(false);
+            this.setMaskBox(true);
+        }
     }
     public Date getDate() {
         return mDate;

@@ -168,8 +168,15 @@ public class EventListFragment extends Fragment {
             mTitleTextView.setText(event.getTitle());
             mDateTextView.setText(DateFormat.format("EEEE, MMM dd, yyyy, hh:mm", event.getDate()));
             mEvent.setCompleted(mEvent.inLine(MainActivity.person));
-            mSolvedImageView.setVisibility(mEvent.isCompleted() ? View.VISIBLE : View.GONE);
-            mStopImageView.setVisibility(!mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+            if (mEvent.getDate().getDate() !=  new Date(System.currentTimeMillis()).getDate()){
+                mSolvedImageView.setVisibility(View.GONE);
+                mStopImageView.setVisibility(View.GONE);
+                mEvent.setCompleted(false);
+            }
+            else{
+                mSolvedImageView.setVisibility(mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+                mStopImageView.setVisibility(!mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+            }
             /*if (EventLab.getEvents().get(0).getId() == mEvent.getId()){
                 mStopImageView.setVisibility(View.GONE);
             }

@@ -122,6 +122,7 @@ public class Event {
 
     public boolean inLine(Person person){
         if (person.mGenericSafe == false){
+            this.setCompleted(false);
             return false;
         }
         int i = 0;
@@ -141,9 +142,11 @@ public class Event {
             l++;
         }
         if (i >= j && k >= l){
+            this.setCompleted(true);
             return true;
         }
         else{
+            this.setCompleted(false);
             return false;
         }
         /*else{

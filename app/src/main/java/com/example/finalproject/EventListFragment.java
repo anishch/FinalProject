@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,11 +103,11 @@ public class EventListFragment extends Fragment {
 
         MenuItem subtitleItem =
                 menu.findItem(R.id.update_details);
-        if (mSubtitleVisible) {
-            subtitleItem.setTitle("Show Number of Events");
-        } else {
-            subtitleItem.setTitle("Hide Number of Events");
-        }
+        subtitleItem.setTitle("Clear All Events");
+
+        MenuItem subtitleItem2 =
+                menu.findItem(R.id.change_vax_status);
+        subtitleItem2.setTitle("Alternate vaccination status");
     }
 
     @Override
@@ -121,9 +122,18 @@ public class EventListFragment extends Fragment {
                 updateUI();
                 return true;
             case R.id.update_details:
+                EventLab.get(getActivity()).clearList();
+                // updated clean fragment
+                Fragment fragmentOfScoreList = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                FragmentTransaction betweenFragmentTransaction = getFragmentManager().beginTransaction();
+                betweenFragmentTransaction.detach(fragmentOfScoreList);
+                betweenFragmentTransaction.attach(fragmentOfScoreList);
+                betweenFragmentTransaction.commit();
+            case R.id.change_vax_status:
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
                 updateSubtitle();
+                MainActivity.person.setVaccinated(!MainActivity.person.getVaccinated());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

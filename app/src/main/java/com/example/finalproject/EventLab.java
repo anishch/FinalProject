@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.finalproject.Event;
 
@@ -16,7 +17,7 @@ public class EventLab {
     private static EventLab sEventLab;
 
     //private List<Event> mEvents;
-    private static Map<UUID, Event> mEvents;
+    public static Map<UUID, Event> mEvents;
 
     public static EventLab get(Context context) {
         if (sEventLab == null) {
@@ -47,4 +48,18 @@ public class EventLab {
         }
     }
 
+    public void clearList() {
+        mEvents.clear();
+    }
+
+    public void clearPastList() {
+        for (int i = 0; i < getEvents().size(); i++){
+            if (getEvents().get(i).getDate().getTime() < System.currentTimeMillis()){
+                mEvents.remove(getEvents().get(i).getId());
+                i--;
+                Log.d("Wassup", "Going through the if statement");
+            }
+            Log.d("Hello", "For Loop");
+        }
+    }
 }

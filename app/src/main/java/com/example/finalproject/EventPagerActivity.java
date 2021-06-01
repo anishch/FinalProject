@@ -20,7 +20,7 @@ public class EventPagerActivity extends
             "com.bignerdranch.android.criminalintent.event_id";
 
 
-    private ViewPager mViewPager;
+    public static ViewPager mViewPager;
     private List<Event> mEvents;
 
     public static Intent newIntent(Context packageContext, UUID eventId) {
@@ -61,5 +61,9 @@ public class EventPagerActivity extends
                 break;
             }
         }
+    }
+
+    public static void clear(){
+        mViewPager.removeAllViews();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -16,11 +17,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import android.text.format.DateFormat;
@@ -56,22 +59,7 @@ public class EventListFragment extends Fragment {
                 .findViewById(R.id.event_recycler_view);
         mEventRecyclerView.setLayoutManager(new
                 LinearLayoutManager(getActivity()));
-        View thingy = view.findViewById(R.id.blank);
-        Button button = thingy.findViewById(R.id.toast_generator);
-        if (EventLab.get(getActivity()).getEvents().size() != 0){
-            button.setVisibility(View.GONE);
-        }
-        button.setOnClickListener(v -> {
 
-            if (v.getId() == R.id.blank){
-                i++;
-                button.setText(i + " times clicked!");
-                Toast.makeText(getActivity(), "Button clicked!", Toast.LENGTH_SHORT).show();
-            }
-            else{
-
-            }
-        });
         updateUI();
         return view;
 
@@ -100,11 +88,11 @@ public class EventListFragment extends Fragment {
 
         MenuItem subtitleItem =
                 menu.findItem(R.id.update_details);
-        if (mSubtitleVisible) {
-            subtitleItem.setTitle("Show Number of Events");
-        } else {
-            subtitleItem.setTitle("Hide Number of Events");
-        }
+        subtitleItem.setTitle("Clear All Events");
+
+        MenuItem subtitleItem2 =
+                menu.findItem(R.id.change_vax_status);
+        subtitleItem2.setTitle("Alternate vaccination status");
     }
 
     @Override
@@ -113,15 +101,22 @@ public class EventListFragment extends Fragment {
             case R.id.new_event:
                 Event event = new Event();
                 EventLab.get(getActivity()).addEvent(event);
-                //Intent intent = EventPagerActivity.newIntent(getActivity(), Event.getId());
                 Intent intent = EventActivity.newIntent(getActivity(), event.getId());
                 startActivity(intent);
                 updateUI();
                 return true;
             case R.id.update_details:
+                EventLab.get(getActivity()).clearList();
+                Fragment fragmentOfScoreList = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                FragmentTransaction betweenFragmentTransaction = getFragmentManager().beginTransaction();
+                betweenFragmentTransaction.detach(fragmentOfScoreList);
+                betweenFragmentTransaction.attach(fragmentOfScoreList);
+                betweenFragmentTransaction.commit();
+            case R.id.change_vax_status:
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
                 updateSubtitle();
+                MainActivity.person.setVaccinated(!MainActivity.person.getVaccinated());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -146,8 +141,8 @@ public class EventListFragment extends Fragment {
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mTitleTextView;
         private TextView mDateTextView;
-        //private TextView mTimeTextView;
         private ImageView mSolvedImageView;
+        private ImageView mStopImageView;
 
         private Event mEvent;
 
@@ -157,24 +152,50 @@ public class EventListFragment extends Fragment {
 
             mTitleTextView = itemView.findViewById(R.id.event_title);
             mDateTextView =  itemView.findViewById(R.id.event_date);
-            //mTimeTextView = (TextView) itemView.findViewById(R.id.Event_time);
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.imageView);
+            mStopImageView = itemView.findViewById(R.id.imageView2);
         }
 
         public void bind(Event event){
             mEvent = event;
             mTitleTextView.setText(event.getTitle());
             mDateTextView.setText(DateFormat.format("EEEE, MMM dd, yyyy, hh:mm", event.getDate()));
-            mSolvedImageView.setVisibility(event.isCompleted() ? View.VISIBLE : View.GONE);
+            mEvent.setCompleted(mEvent.inLine(MainActivity.person));
+            if (mEvent.getDate().getDate() !=  new Date(System.currentTimeMillis()).getDate()){
+                mSolvedImageView.setVisibility(View.GONE);
+                mStopImageView.setVisibility(View.GONE);
+                mEvent.setCompleted(false);
+                if (mEvent.getTitle().equals(EventLab.getEvents().get(EventLab.getEvents().size() - 1).getTitle())){
+                    if (mEvent.accessed){
+                        Toast.makeText (getActivity(), R.string.event_found, Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText (getActivity(), R.string.event_not_found, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+            else{
+                mSolvedImageView.setVisibility(mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+                mStopImageView.setVisibility(!mEvent.isCompleted() ? View.VISIBLE : View.GONE);
+                if (mEvent.getTitle().equals(EventLab.getEvents().get(EventLab.getEvents().size() - 1).getTitle())){
+                    if (mEvent.accessed){
+                        Toast.makeText (getActivity(), R.string.event_found, Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText (getActivity(), R.string.event_not_found, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if (mEvent.getDate().getTime() <= System.currentTimeMillis() + (15*60*1000)){
+                    Toast.makeText (getActivity(), R.string.event_soon, Toast.LENGTH_SHORT).show();
+                }
+            }
+
         }
 
         @Override
         public void onClick(View view){
-            //Toast.makeText(getActivity(), mEvent.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
             Intent intent = EventActivity.newIntent(getActivity(), mEvent.getId());
-            /*Intent intent =
-                    EventPagerActivity.newIntent(getActivity(),
-                            mEvent.getId());*/
             startActivity(intent);
         }
     }

@@ -41,7 +41,7 @@ public class CombinedFragment extends DialogFragment {
 
     private Date date;
     private Time time;
-    //start
+
 
     public static CombinedFragment newInstance(Date date, Time time) {
         Bundle args = new Bundle();
@@ -54,38 +54,34 @@ public class CombinedFragment extends DialogFragment {
 
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) { // Opening Up the Dialog
         final Time[] time = {(Time)
-                getArguments().getSerializable(ARG_TIME)};
+                getArguments().getSerializable(ARG_TIME)}; // specifying that the Time Array is an unchanging array of potential values.
 
-        //time.getTime();
-
-        View v = LayoutInflater.from(getActivity())
+        View v = LayoutInflater.from(getActivity()) // Our first view.
                 .inflate(R.layout.dialog_date_time_picker, null);
 
         mTimePicker = (TimePicker)
                 v.findViewById(R.id.dialog_time_picker);
-        mTimePicker.setEnabled(true);
-        mTimePicker.setIs24HourView(false);
+        mTimePicker.setEnabled(true); // can be accessed
+        mTimePicker.setIs24HourView(false); //not in terms of military time
 
-        final Date[] date = {(Date)
+        final Date[] date = {(Date) // same concept for date
                 getArguments().getSerializable(ARG_DATE)};
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(); // The date class is obsolete, so we use the Calendar class for this part.
         calendar.setTime(date[0]);
-        final int[] year = {calendar.get(Calendar.YEAR)};
-        final int[] month = {calendar.get(Calendar.MONTH)};
-        final int[] day = {calendar.get(Calendar.DAY_OF_MONTH)};
-
-        //Fragment fragment = new Fragment();
+        final int[] year = {calendar.get(Calendar.YEAR)}; //obtaining year
+        final int[] month = {calendar.get(Calendar.MONTH)}; //obtaining month
+        final int[] day = {calendar.get(Calendar.DAY_OF_MONTH)}; //obtaining date
 
 
         mDatePicker = (DatePicker)
                 v.findViewById(R.id.dialog_date_picker);
-        mDatePicker.init(year[0], month[0], day[0], null);
+        mDatePicker.init(year[0], month[0], day[0], null); //init to current
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
-                .setTitle("Time of Event")
+                .setTitle("Time of Event") // opening up the Dialog
                 .setPositiveButton(android.R.string.ok,
                         null)
                 .setPositiveButton(android.R.string.ok,
@@ -96,17 +92,17 @@ public class CombinedFragment extends DialogFragment {
                             public void
                             onClick(DialogInterface dialog, int which) {
                                 int year =
-                                        mDatePicker.getYear();
+                                        mDatePicker.getYear(); //getting year
                                 int month =
-                                        mDatePicker.getMonth();
+                                        mDatePicker.getMonth(); //getting month
                                 int day =
-                                        mDatePicker.getDayOfMonth();
-                                date[0] = new GregorianCalendar(year, month, day).getTime();
+                                        mDatePicker.getDayOfMonth(); //getting day
+                                date[0] = new GregorianCalendar(year, month, day).getTime(); // inputting date in terms of time due to use later on
                                 minute =
-                                        mTimePicker.getCurrentMinute();
+                                        mTimePicker.getCurrentMinute(); // getting minute
                                 hour =
-                                        mTimePicker.getCurrentHour();
-                                Clock clock = new Clock() {
+                                        mTimePicker.getCurrentHour(); //hour
+                                Clock clock = new Clock() { //these sort of below are irrelevant given we have the times from above but is just for "show"
                                     @Override
                                     public ZoneId getZone() {
                                         return null;
@@ -121,7 +117,7 @@ public class CombinedFragment extends DialogFragment {
                                     public Instant instant() {
                                         return null;
                                     }
-                                }; sendResult(Activity.RESULT_OK, new Time(hour, minute, second), date[0]);
+                                }; sendResult(Activity.RESULT_OK, new Time(hour, minute, second), date[0]); //transfer of input to output seen on text
                             }
                         })
                 .create();
@@ -129,15 +125,11 @@ public class CombinedFragment extends DialogFragment {
     }
 
 
-
-    //end
-
-
     private void sendResult(int resultCode, Time time, Date date) {
         if (getTargetFragment() == null) {
             return;
         }
-        Intent intent = new Intent();
+        Intent intent = new Intent(); //transferring to an intent to be seen and received elsewhere
         try{
             intent.putExtra(EXTRA_DATE, date);
             intent.putExtra(EXTRA_TIME, time);

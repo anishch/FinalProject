@@ -10,8 +10,13 @@
 
     <item
         android:id="@+id/update_details"
-        android:title="Account Details"
-        app:showAsAction="ifRoom"/>
+        android:title="Clear All"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item
+        android:id="@+id/change_vax_status"
+        android:title="Is Vaccinated?"
+        app:showAsAction="ifRoom|withText"/>
 
 
 </menu>

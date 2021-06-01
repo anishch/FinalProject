@@ -38,5 +38,14 @@
         app:layout_constraintEnd_toStartOf="@+id/next_button"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="401dp"
+        android:layout_height="268dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/covid19statuswashington"
+        tools:layout_editor_absoluteX="35dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

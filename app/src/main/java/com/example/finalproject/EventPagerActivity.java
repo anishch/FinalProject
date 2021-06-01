@@ -23,14 +23,14 @@ public class EventPagerActivity extends
     public static ViewPager mViewPager;
     private List<Event> mEvents;
 
-    public static Intent newIntent(Context packageContext, UUID eventId) {
+    public static Intent newIntent(Context packageContext, UUID eventId) { //creating intent
         Intent intent = new Intent(packageContext,
                 EventPagerActivity.class);
         intent.putExtra(EXTRA_event_ID, eventId);
         return intent;
     }
 
-    UUID eventId = (UUID) getIntent()
+    UUID eventId = (UUID) getIntent() //defining id
             .getSerializableExtra(EXTRA_event_ID);
 
     @Override
@@ -39,7 +39,7 @@ public class EventPagerActivity extends
         setContentView(R.layout.activity_event_pager);
         mViewPager = (ViewPager)
                 findViewById(R.id.event_view_pager);
-        mEvents = EventLab.get(this).getEvents();
+        mEvents = EventLab.get(this).getEvents(); //using this very activity as context
         FragmentManager fragmentManager =
                 getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
@@ -54,7 +54,7 @@ public class EventPagerActivity extends
                 return mEvents.size();
             }
         });
-        for (int i = 0; i < mEvents.size(); i++) {
+        for (int i = 0; i < mEvents.size(); i++) { //view specific item and work with scroll in order to make view in line.
             if
             (mEvents.get(i).getId().equals(eventId)) {
                 mViewPager.setCurrentItem(i);
@@ -65,5 +65,5 @@ public class EventPagerActivity extends
 
     public static void clear(){
         mViewPager.removeAllViews();
-    }
+    } //clearing all views.
 }

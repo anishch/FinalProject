@@ -59,22 +59,7 @@ public class EventListFragment extends Fragment {
                 .findViewById(R.id.event_recycler_view);
         mEventRecyclerView.setLayoutManager(new
                 LinearLayoutManager(getActivity()));
-        //View thingy = view.findViewById(R.id.blank);
-        /*Button button = thingy.findViewById(R.id.toast_generator);
-        if (EventLab.get(getActivity()).getEvents().size() != 0){
-            button.setVisibility(View.GONE);
-        }
-        button.setOnClickListener(v -> {
 
-            if (v.getId() == R.id.blank){
-                i++;
-                button.setText(i + " times clicked!");
-                Toast.makeText(getActivity(), "Button clicked!", Toast.LENGTH_SHORT).show();
-            }
-            else{
-
-            }
-        });*/
         updateUI();
         return view;
 
@@ -116,14 +101,12 @@ public class EventListFragment extends Fragment {
             case R.id.new_event:
                 Event event = new Event();
                 EventLab.get(getActivity()).addEvent(event);
-                //Intent intent = EventPagerActivity.newIntent(getActivity(), Event.getId());
                 Intent intent = EventActivity.newIntent(getActivity(), event.getId());
                 startActivity(intent);
                 updateUI();
                 return true;
             case R.id.update_details:
                 EventLab.get(getActivity()).clearList();
-                // updated clean fragment
                 Fragment fragmentOfScoreList = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 FragmentTransaction betweenFragmentTransaction = getFragmentManager().beginTransaction();
                 betweenFragmentTransaction.detach(fragmentOfScoreList);
@@ -158,7 +141,6 @@ public class EventListFragment extends Fragment {
     private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mTitleTextView;
         private TextView mDateTextView;
-        //private TextView mTimeTextView;
         private ImageView mSolvedImageView;
         private ImageView mStopImageView;
 
@@ -170,7 +152,6 @@ public class EventListFragment extends Fragment {
 
             mTitleTextView = itemView.findViewById(R.id.event_title);
             mDateTextView =  itemView.findViewById(R.id.event_date);
-            //mTimeTextView = (TextView) itemView.findViewById(R.id.Event_time);
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.imageView);
             mStopImageView = itemView.findViewById(R.id.imageView2);
         }
@@ -209,23 +190,12 @@ public class EventListFragment extends Fragment {
                     Toast.makeText (getActivity(), R.string.event_soon, Toast.LENGTH_SHORT).show();
                 }
             }
-            /*if (EventLab.getEvents().get(0).getId() == mEvent.getId()){
-                mStopImageView.setVisibility(View.GONE);
-            }
-            else{
-                mStopImageView.setVisibility(!MainActivity.person.inLine(mEvent)  ? View.VISIBLE : View.GONE);
-            }*/
-            //mStopImageView.setVisiblity(MainActivity.person.inLine(mEvent) ? View.VISIBLE : View.GONE);
+
         }
 
         @Override
         public void onClick(View view){
-            //Toast.makeText(getActivity(), mEvent.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
             Intent intent = EventActivity.newIntent(getActivity(), mEvent.getId());
-            //Intent intent = HealthCheckActivity.newIntent(getActivity(), mEvent.getId());
-            /*Intent intent =
-                    EventPagerActivity.newIntent(getActivity(),
-                            mEvent.getId());*/
             startActivity(intent);
         }
     }

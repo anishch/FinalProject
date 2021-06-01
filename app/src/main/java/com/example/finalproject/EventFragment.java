@@ -34,12 +34,10 @@ import java.util.UUID;
 import static android.widget.CompoundButton.*;
 
 
-public class EventFragment extends Fragment {
+public class EventFragment extends Fragment { //creating Event
 
     private static final String ARG_Event_ID = "Event_id";
     private static final String DIALOG_DATE_AND_TIME ="DialogDateandTime";
-    //private static final String DIALOG_TIME = "DialogTime";
-
 
     private static final int REQUEST_DATE_AND_TIME = 0;
 
@@ -56,7 +54,7 @@ public class EventFragment extends Fragment {
     private CheckBox mMaskBox;
     private EditText mCOVIDViolator;
 
-    private EditText tempQuestion;
+    private EditText tempQuestion; //EditText
     private EditText soonQuestion;
     private EditText symptomQuestion;
     private EditText maskQuestion;
@@ -65,11 +63,11 @@ public class EventFragment extends Fragment {
     private boolean bool2 = false;
     private String str;
 
-    public static EventFragment newInstance(UUID EventId){
+    public static EventFragment newInstance(UUID EventId){ //crafting new instance
         Bundle args = new Bundle();
         args.putSerializable(ARG_Event_ID, EventId);
 
-        EventFragment fragment = new EventFragment();
+        EventFragment fragment = new EventFragment(); //new fragment -> allows for recursion
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,16 +76,16 @@ public class EventFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID EventId = (UUID) getArguments().getSerializable(ARG_Event_ID);
-        mEvent = EventLab.get(getActivity()).getEvent(EventId);
+        mEvent = EventLab.get(getActivity()).getEvent(EventId); //invoking eventLab
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //mEvent = new Event();
+
         View v = inflater.inflate(R.layout.fragment_event, container,
                 false);
-        mCOVIDViolator = (EditText) v.findViewById(R.id.event_title);
+        mCOVIDViolator = (EditText) v.findViewById(R.id.event_title); //title
 
         mCOVIDViolator.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,7 +99,7 @@ public class EventFragment extends Fragment {
                     CharSequence s, int start, int
                     before, int count) {
                 mEvent.setTitle(s.toString());
-                if (mEvent.getTitle().equals("The Overlake School")){
+                if (mEvent.getTitle().equals("The Overlake School")){ //setting boolean to be true
                     bool2 = true;
                     str = s.toString();
                 }
@@ -139,13 +137,13 @@ public class EventFragment extends Fragment {
 
         mVaxBox = (CheckBox) v.findViewById(R.id.vax_needed);
         mVaxBox.setChecked(mEvent.getVaxBox());
-        //mVaxBox.setEnabled(false);
+
         if (mEvent.getTitle().equals("The Overlake School")){
-            mEvent.setVaxBox(false);
+            mEvent.setVaxBox(false); //setting vaccination false
             mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setEnabled(false);
         }
-        else if (mEvent.getTitle().equals("CenturyLink Stadium")){
+        else if (mEvent.getTitle().equals("CenturyLink Stadium")){ //same pattern
             mEvent.setVaxBox(true);
             mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setEnabled(false);
@@ -154,7 +152,7 @@ public class EventFragment extends Fragment {
             mEvent.setVaxBox(true);
             mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setEnabled(false);
-            //mEvent.get
+
         }
         else if (mEvent.getTitle().equals("Fred Meyer")){
            mEvent.setVaxBox(false);
@@ -171,14 +169,14 @@ public class EventFragment extends Fragment {
             mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setEnabled(false);
         }
-        else if (!bool2){
-            Log.d("Hey", "Prob not working");
+        else if (!bool2){ //if creating a new dir
+            Log.d("Hey", "Prob not working"); //log function
             mVaxBox.setChecked(mEvent.getVaxBox());
             mVaxBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView,
                                              boolean isChecked) {
-                    mEvent.setVaxBox(isChecked);
+                    mEvent.setVaxBox(isChecked); //can be customized
 
                 }
             });
@@ -186,8 +184,8 @@ public class EventFragment extends Fragment {
 
         mMaskBox = (CheckBox) v.findViewById(R.id.mask_needed);
         mMaskBox.setChecked(mEvent.getMaskBox());
-        //mMaskBox.setEnabled(false);
-        if (mEvent.getTitle().equals("The Overlake School")){
+
+        if (mEvent.getTitle().equals("The Overlake School")){ //same logic but for Mask Reqs (look down)
             Log.d("BOOL ACTIVATED", "RECOGNIZED");
             mEvent.setMaskBox(true);
             mMaskBox.setChecked(mEvent.getMaskBox());
@@ -217,7 +215,7 @@ public class EventFragment extends Fragment {
              mMaskBox.setChecked(mEvent.getMaskBox());
              mMaskBox.setEnabled(false);
         }
-        else if (!bool2){
+        else if (!bool2){ //if creating something outside of dir
             mMaskBox.setChecked(mEvent.getMaskBox());
             mMaskBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
@@ -236,7 +234,6 @@ public class EventFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 CombinedFragment dialog = CombinedFragment.newInstance(mEvent.getDate(), mEvent.getTime());
-                //Fragment dialog2  TimePickerFragment.newInstance(mEvent.getTime());
                 dialog.setTargetFragment(EventFragment.this, REQUEST_DATE_AND_TIME);
                 try {
                     Thread.sleep(5000);
@@ -247,9 +244,7 @@ public class EventFragment extends Fragment {
             }
         });
 
-        /*
-        if (mEvent.getDate() == java.time.LocalDate.now().get)
-         */
+        //checking temperature
         tempQuestion = (EditText) v.findViewById(R.id.question_temperature);
         tempQuestion.setText(mEvent.getTemperature());
         tempQuestion.addTextChangedListener(new TextWatcher() {
@@ -278,6 +273,7 @@ public class EventFragment extends Fragment {
             }
         });
 
+        //checking proximity (copy-paste)
         soonQuestion = (EditText) v.findViewById(R.id.question_proximity);
         soonQuestion.addTextChangedListener(new TextWatcher() {
             @Override
@@ -304,7 +300,7 @@ public class EventFragment extends Fragment {
 
             }
         });
-
+        //checking recent symptoms
         symptomQuestion = (EditText) v.findViewById(R.id.question_symptoms);
         symptomQuestion.addTextChangedListener(new TextWatcher() {
             @Override
@@ -332,6 +328,7 @@ public class EventFragment extends Fragment {
             }
         });
 
+        //making sure mask is worn
         maskQuestion = (EditText) v.findViewById(R.id.question_mask);
         maskQuestion.addTextChangedListener(new TextWatcher() {
             @Override
@@ -348,12 +345,10 @@ public class EventFragment extends Fragment {
                     bool = false;
                     MainActivity.person.setMasked(false);
                     MainActivity.person.update();
-                    //MainActivity.person.setGenericSafe(false);
                 }
                 else if (maskQuestion.getText().toString().toLowerCase().equals("yes")){
                     MainActivity.person.setMasked(true);
                     MainActivity.person.update();
-                    //MainActivity.person.setGenericSafe(bool);
                 }
             }
             @Override
@@ -363,9 +358,7 @@ public class EventFragment extends Fragment {
             }
         });
 
-        /*if (MainActivity.person.inLine(mEvent)){
-            mSolvedCheckBox.setEnabled(false);
-        }*/
+        //to suggest completion of event so that it can either be locked or confirmed.
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.event_solved);
         mEvent.setCompleted(false);
         mSolvedCheckBox.setChecked(mEvent.isCompleted());
@@ -374,33 +367,6 @@ public class EventFragment extends Fragment {
             mSolvedCheckBox.setEnabled(true);
             mEvent.setCompleted(true);
             mSolvedCheckBox.setChecked(mEvent.isCompleted());
-            /*mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                                             boolean isChecked) {
-                    Log.d("ALPHA", MainActivity.person.getName());
-                    Log.d("ALPHA", MainActivity.person.getDateOfBirth());
-                    //Log.d("ALPHA", MainActivity.person.)
-                    if (MainActivity.person.getMasked() == true){
-                        Log.d("ALPHA", "YES");
-                    }
-                    if (mEvent.getVaxBox() == true){
-                        Log.d("ALPHA", "LET'S GOO");
-                    }
-                    if (mEvent.getMaskBox() == true){
-                        Log.d("ALPHA", "LET'S GOO");
-                    }
-                    if (MainActivity.person.getName().toLowerCase().equals("anish")){
-                        Log.d("BETA", "YES");
-                    }
-                    if (MainActivity.person.inLine(mEvent) == true){
-                        mEvent.setCompleted(true);
-                    }
-                    else{
-
-                    }
-                }
-            });*/
         }
         else{
             mSolvedCheckBox.setEnabled(false);
@@ -422,6 +388,7 @@ public class EventFragment extends Fragment {
         return v;
     }
 
+    //Activity Result
     @Override
     public void onActivityResult(int requestCode, int
             resultCode, Intent data) {
@@ -432,10 +399,10 @@ public class EventFragment extends Fragment {
             date = (Date) data
                     .getSerializableExtra(CombinedFragment.EXTRA_DATE);
             Time time = (Time) data.getSerializableExtra(CombinedFragment.EXTRA_TIME);
-            date.setHours(time.getHours());
+            date.setHours(time.getHours()); //set the date
             date.setMinutes(time.getMinutes());
             date.setSeconds(time.getSeconds());
-            mEvent.setDate(date);
+            mEvent.setDate(date); //ensure that the event has the attribute before display.
             mDateButton.setText(mEvent.getDate().toString());
         }
 

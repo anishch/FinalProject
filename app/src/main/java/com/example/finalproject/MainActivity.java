@@ -12,13 +12,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+// first original event which discovers "permanent" facets of individual which are not susceptible to change.
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button nextButton;
+    Button nextButton; //defining next and previous buttons
     Button previousButton;
     EditText eText;
-    int index = 0;
-    static Person person;
+    int index = 0; //index for question management
+    static Person person; //making it static such that it can be accessed cross-activities
 
     private Question[] mQuestionBank = new Question[]{ //Questions Created
             new Question("What is your name?"),
@@ -29,9 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // [Question], [Attribute]
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //init()
         super.onCreate(savedInstanceState);
-        person = new Person();
+        person = new Person(); //constructing one and only but "new" person
         setContentView(R.layout.activity_main);
         nextButton = findViewById(R.id.next_button);
         previousButton = findViewById(R.id.prev_button);
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v) { //change questions accordingly
         if (v.getId() == R.id.next_button){
             nextQuestion();
         }
@@ -61,14 +62,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (index == 1){
             person.setmDateOfBirth(eText.getText().toString());
-            Toast.makeText(this, "DOB Saved as " + person.getDateOfBirth(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "DOB Saved as " + person.getDateOfBirth(), Toast.LENGTH_LONG).show(); //Kind of found this interesting that it could be represented string-wise.
         }
-        else if (index == 2){
+        else if (index == 2){ // ending
             if (eText.getText().toString().toLowerCase().equals("yes")){
-                person.setVaccinated(true);
+                person.setVaccinated(true); //yes/no answers
             }
             else if (eText.getText().toString().toLowerCase().equals("no")){
-                person.setVaccinated(false);
+                person.setVaccinated(false); //yes-no answers
             }
 
         }
@@ -78,13 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             eText.setHint(mQuestionBank[index].getName());
         }
         else{
-            nextButton.setEnabled(false);
-            nextButton.setVisibility(View.GONE);
+            nextButton.setEnabled(false); //stopping any possibility of changing buttons
+            nextButton.setVisibility(View.GONE); //making all disappeear
             previousButton.setEnabled(false);
             previousButton.setVisibility(View.GONE);
             eText.setEnabled(false);
             eText.setVisibility(View.GONE);
-            Intent intent = new Intent(this, EventListActivity.class);
+            Intent intent = new Intent(this, EventListActivity.class); //transferring activity to the "Criminal Intent" aspect of the application.
             startActivity(intent);
         }
     }

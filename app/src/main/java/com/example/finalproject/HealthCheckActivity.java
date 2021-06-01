@@ -10,6 +10,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// This became an obsolete class due to
+// the fact that the health check became integrated
+// with the creation of the event.
+// However, this served as the base code
+// of the additional code placed in Event(Fragment)Activity.
+
+//Therefore no comments are seen here below.
+
 public class HealthCheckActivity extends AppCompatActivity implements View.OnClickListener {
 
         private EditText tempQuestion;
